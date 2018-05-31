@@ -1,9 +1,9 @@
 import React from 'react';
 
 const buildControls = (props) => (
-    <div>
+  <div>
 
-    </div>
+  </div>
 );
 
 export default buildControls;
