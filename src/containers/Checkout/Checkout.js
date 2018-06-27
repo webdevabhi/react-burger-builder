@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Route } from "react-router-dom";
+
 import CheckSummary from "../../components/Order/CheckSummary/CheckSummary";
+import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
     state = {
@@ -37,6 +40,8 @@ class Checkout extends Component {
                     ingredients={this.state.ingredients}
                     onCheckoutCancel={this.checkoutCancelledHandler}
                     onCheckoutContinue={this.checkoutContinueHandler} />
+
+                <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
             </div>
         );
     }
