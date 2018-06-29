@@ -8,11 +8,57 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+        orderFrom: {
+            name: {
+                elementType: 'input',
+                elementCofig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
+                },
+                value: 'Abhishek Patel'
+            },
+            street: {
+                elementType: 'input',
+                elementCofig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: '13th Main'
+            },
+            zipCode: {
+                elementType: 'input',
+                elementCofig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: '560010'
+            },
+            country: {
+                elementType: 'input',
+                elementCofig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: 'India'
+            },
+            email: {
+                elementType: 'input',
+                elementCofig: {
+                    type: 'text',
+                    placeholder: 'Your E-Mail'
+                },
+                value: 'abhishek@test.com'
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementCofig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'CHeapest'}
+                    ],
+                },
+                value: 'fastest'
+            },
         },
         loading: false
     }
@@ -22,17 +68,7 @@ class ContactData extends Component {
         this.setState({ loading: true });
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price,
-            customer: {
-                name: 'Abhishek Patel',
-                adress: {
-                    street: 'test street 1',
-                    zipCode: '460001',
-                    country: 'India'
-                },
-                email: 'test@firebase.com'
-            },
-            deliveryMethod: 'fastest'
+            price: this.props.price
         }
         axios.post('/orders.json', order)
             .then(res => {
@@ -46,12 +82,25 @@ class ContactData extends Component {
     }
 
     render() {
+        const formElementArray = [];
+        for (let key in this.state.orderFrom) {
+            if (this.state.orderFrom.hasOwnProperty(key)) {
+                formElementArray.push({
+                    id: key,
+                    config: this.state.orderFrom[key]
+                });
+            }
+        }
         let form = (
             <form>
-                <Input inputtype="input" type="text" name="name" placeholder="Your Name" />
-                <Input inputtype="input" type="email" name="email" placeholder="Your Mail" />
-                <Input inputtype="input" type="text" name="street" placeholder="Street" />
-                <Input inputtype="input" type="text" name="postCode" placeholder="Post Code" />
+                
+                {formElementArray.map(formElement => (
+                    <Input 
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementCofig={formElement.config.elementCofig}
+                        value={formElement.config.value} />
+                ))}
 
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
