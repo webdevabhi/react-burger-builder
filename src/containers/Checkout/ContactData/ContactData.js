@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../../axios-orders';
+import { connect } from "react-redux";
 
 import Button from "../../../components/UI/Button/Button";
 import classes from './ContactData.css'
@@ -15,7 +16,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Name'
         },
-        value: 'Abhishek Patel',
+        value: '',
         validation: {
           required: true
         },
@@ -27,7 +28,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street'
         },
-        value: '13th Main',
+        value: '',
         validation: {
           required: true
         },
@@ -39,7 +40,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'ZIP Code'
         },
-        value: '560010',
+        value: '',
         validation: {
           required: true,
           minLength: 5,
@@ -53,7 +54,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country'
         },
-        value: 'India',
+        value: '',
         validation: {
           required: true
         },
@@ -65,7 +66,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your E-Mail'
         },
-        value: 'abhishek@test.com',
+        value: '',
         validation: {
           required: true
         },
@@ -78,6 +79,9 @@ class ContactData extends Component {
             { value: 'fastest', displayValue: 'Fastest' },
             { value: 'cheapest', displayValue: 'Cheapest' }
           ],
+        },
+        validation: {
+          required: true
         },
         value: 'fastest'
       },
@@ -95,7 +99,7 @@ class ContactData extends Component {
       }
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData
     }
@@ -180,4 +184,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  };
+}
+
+export default connect(mapStateToProps)(ContactData);
