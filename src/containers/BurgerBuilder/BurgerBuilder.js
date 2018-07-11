@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from '../../axios-orders';
 import { connect } from "react-redux";
 
 import Aux from '../../hoc/Aux';
@@ -10,25 +9,15 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as burgerBuilderActions from '../../store/actions/index';
+import axios from "../../axios-orders";
 
 class BurgerBuilder extends Component {
   state = {
-    purchasable: false,
     purchasing: false,
-    loading: false,
-    error: false
   }
 
   componentDidMount() {
-    axios.get('/ingredients.json')
-      .then(res => {
-        console.log(res.data);
-        this.setState({ingredients: res.data});
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({ error: true})
-      });
+    
   }
 
   updatePurchaseState(ingredients) {
@@ -86,10 +75,6 @@ class BurgerBuilder extends Component {
         purchaseContinued={this.purchaseContinueHandler} />
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />
-    }
-
     return (
       <Aux>
         <Modal 
@@ -106,7 +91,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    error: state.error
   };
 }
 
