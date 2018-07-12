@@ -6,6 +6,8 @@ import Button from "../../../components/UI/Button/Button";
 import classes from './ContactData.css'
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import * as actions from "../../../store/actions/index";
 
 class ContactData extends Component {
   state = {
@@ -91,7 +93,7 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
+    
     const formData = {};
     for (const formElmIdentifier in this.state.orderFrom) {
       if (this.state.orderFrom.hasOwnProperty(formElmIdentifier)) {
@@ -103,6 +105,8 @@ class ContactData extends Component {
       price: this.props.price,
       orderData: formData
     }
+
+    this.props.onOrderBurger(order);
     
   }
 
@@ -183,4 +187,8 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+  onOrderBurger: (orderData) => dispatch(actions.purchageBurgerStart(orderData));
+}
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
