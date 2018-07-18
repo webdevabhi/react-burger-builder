@@ -53,7 +53,6 @@ export const auth = (email, password, isSignUp) => {
         }
         axios.post(url, authData)
             .then(res => {
-                console.log(res);
                 let d1 = new Date();
                 let expirationDate = new Date(d1);
                 expirationDate.setHours(d1.getHours() + 2);
