@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Layout from './components/Layout/Layout';
@@ -33,10 +33,10 @@ class App extends Component {
   }
 }
 
-const mapDispathtoProps = dispatch => {
+const mapDispatchtoProps = dispatch => {
   return {
-    onTryAutoSignin: () => dispatch(actions.authCheckState)
-  }
-}
+    onTryAutoSignin: () => dispatch(actions.authCheckState())
+  };
+};
 
-export default connect(null, mapDispathtoProps)(App);
+export default withRouter(connect(null, mapDispatchtoProps)(App));
