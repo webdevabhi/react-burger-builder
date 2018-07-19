@@ -24,4 +24,9 @@ describe('<NavigationItems />', () => {
         wrapper.setProps({isAuthenticate: true});
         expect(wrapper.find(NavigationItem)).toHaveLength(3);
     });
+
+    it('should an exact logout button', () => {
+        wrapper.setProps({ isAuthenticate: true });
+        expect(wrapper.contains(<NavigationItem link="/logout">Logout</NavigationItem>)).toEqual(true);
+    });
 });
